@@ -13,8 +13,8 @@ const Login = () => {
             .post('/users/login', { email, password })
             .then((res) => {
                 setToken(res.data.token);
-                alert('Logged in successfully');
                 if (localStorage.getItem('token').length > 2) {
+                    alert('Logged in successfully');
                     navigate('/members');
                 }
             })

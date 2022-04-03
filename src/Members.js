@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 const Members = () => {
+    let navigate = useNavigate();
     let [data, setData] = useState([]);
     let storedToken = localStorage.getItem('token');
     storedToken = storedToken.replace('"', '');
@@ -26,6 +28,7 @@ const Members = () => {
                     <th>Email</th>
                     <th>Age</th>
                     <th>Date of birth</th>
+                    <th>Edit </th>
                 </tr>
                 {data.map((val, index) => {
                     return (
@@ -35,6 +38,17 @@ const Members = () => {
                             <td>{val.email}</td>
                             <td>{val.age}</td>
                             <td>{val.dob}</td>
+                            <td>
+                                {' '}
+                                <button
+                                    className='btn btn-warning'
+                                    onClick={() =>
+                                        navigate(`/edituser/${val.id}`)
+                                    }
+                                >
+                                    Edit Details
+                                </button>{' '}
+                            </td>
                         </tr>
                     );
                 })}

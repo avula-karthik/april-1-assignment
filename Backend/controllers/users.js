@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
-const res = require('express/lib/response');
 const jwt = require('jsonwebtoken');
 const authenticationMiddleware = require('../middlewares/authentication');
+const { authorized } = require('../poolconnect');
 const connector = require('../poolconnect');
 exports.createTable = function (res, res) {
     const sqlQuery = `CREATE TABLE users(id int PRIMARY KEY AUTO_INCREMENT, name varchar(40), email varchar(40),password varchar(200),age int,dob date )`;
@@ -104,6 +104,42 @@ exports.getUsers = [
     authenticationMiddleware,
     function (req, res) {
         const sqlQuery = `SELECT * FROM users ;`;
+        connector.query(sqlQuery, function (err, results, fields) {
+            if (err) {
+                res.json(err);
+            } else {
+                res.json(results);
+            }
+        });
+    },
+];
+exports.getUserById = [
+    authenticationMiddleware,
+    function (req, res) {
+        let id = req.params.id;
+        const sqlQuery = `SELECT * FROM users WHERE id="${id}"`;
+        connector.query(sqlQuery, function (err, results, fields) {
+            if (err) {
+                res.json(err);
+            } else {
+                res.json(results);
+            }
+        });
+    },
+];
+exports.editUser = [
+    function (req, res) {
+        let id = req.params.id;
+        let { name, email, password, age, dob } = req.body;
+        try {
+            let salt = bcrypt.genSaltSync(10);
+            console.log(salt);
+            encryptedPassword = bcrypt.hashSync(req.body.password, salt);
+            console.log(encryptedPassword);
+        } catch (err) {
+            console.log(err);
+        }
+        const sqlQuery = `UPDATE users SET name="${name}", email="${email}",password="${encryptedPassword}", age=${age}, dob="${dob}" where id="${id}"`;
         connector.query(sqlQuery, function (err, results, fields) {
             if (err) {
                 res.json(err);

@@ -7,5 +7,7 @@ router.get('/', userController.getUsers);
 router.get('/createtable', userController.createTable);
 router.post('/adduser', userController.addUser);
 router.post('/login', userController.login);
+router.put('/edituser/:id', userController.editUser);
+router.get('/:id', userController.getUserById);
 
 module.exports = router;

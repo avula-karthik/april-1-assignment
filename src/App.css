@@ -53,6 +53,7 @@ table {
   border-collapse: collapse;
   width: 80%;
   margin: auto;
+  margin-top: 4%;
 }
 
 table td, table th {

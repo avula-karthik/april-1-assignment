@@ -4,6 +4,7 @@ import Registration from './Registration';
 import Login from './Login';
 import Logout from './Logout';
 import Members from './Members';
+import EditUser from './EditUser';
 
 function App() {
     return (
@@ -23,6 +24,7 @@ function App() {
                     <Route path='/login' element={<Login />} />
                     <Route path='/logout' element={<Logout />} />
                     <Route path='/members' element={<Members />} />
+                    <Route path='/edituser/:id' element={<EditUser />} />
                 </Routes>
             </BrowserRouter>
         </div>
